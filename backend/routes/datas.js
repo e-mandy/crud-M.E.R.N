@@ -1,0 +1,22 @@
+const express = require('express')
+
+const router = express.Router()
+const DataModel = require('../Models/Data')
+const { getAllDatas, createData, deleteData, updateData, getSpecialData } = require('../controllers/dataController')
+
+// Get all datas
+router.get('/', getAllDatas)
+
+// Get a special data
+router.get('/:id', getSpecialData)
+
+// Create a new workout
+router.post('/', createData)
+
+// Delete a workout
+router.delete('/:id', deleteData)
+
+// Update a data
+router.patch('/:id', updateData)
+
+module.exports = router
