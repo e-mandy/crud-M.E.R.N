@@ -1,11 +1,55 @@
 import { useEffect, useState } from "react";
 import Formulaire from "../form/formv2";
-import { TableData } from "../table/tableData";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
+import DataTable from "react-data-table-component"
+import { ModalCard } from "../modal/modal";
+
+const columns = [
+    {
+        name: "Numéro",
+        selector: row => row._id
+    },
+
+    {
+        name: "Valeur",
+        selector: row => row.value
+    },
+
+    {
+        name: "Actions",
+        selector: row => row.actions,
+    }
+]
+
 
 export function Homepage(){
 
     const [datas, setDatas] = useState([])
+    const [show, setShow] = useState(false)
+    const [showSupp, setShowSupp] = useState(false)
+    const [selectedId, setSelectedId] = useState()
+    
+    const insertActions = (tableData) => {
+        tableData.map(eachData => {
+            eachData.actions = (
+                <div className="d-flex gap-2">
+                    <Button variant="primary" onClick={()=> {handleModal(eachData._id, 'update')}}>Modifier</Button>
+                    <Button variant="danger" onClick={() => {handleModal(eachData._id, "delete")}}>Supprimer</Button>
+                </div>
+            )
+        })
+
+        return tableData
+    }
+
+    const handleModal = (id, modal) =>{
+        setSelectedId(id)
+        if(modal == "update"){
+            setShow(!show)
+        }else if(modal == "delete"){
+            setShowSupp(!showSupp)
+        }
+    }
     
     useEffect(()=>{
 
@@ -44,6 +88,43 @@ export function Homepage(){
         }
         insertData()
     }
+
+    const updateData = (id, value) => {
+
+        const editData = async () => {
+            const response = await fetch(`http://localhost:4000/api/data/${id}`, {
+                method: "PATCH",
+                headers: {
+                "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                value: value
+                })
+            })
+            const json = await response.json()
+            updateDatas(json)
+        }
+
+        editData()
+        setShow(false)
+        
+    }
+
+    const deleteData =  (id) => {
+        const suppData = async () => {
+            const response = await fetch(`http://localhost:4000/api/data/${id}`, {
+                method: "DELETE",
+                headers: {
+                "Content-Type": "application/json",
+                }
+            })
+            const json = await response.json()
+            deleteDatas(json)
+        }
+
+        suppData()
+        setShowSupp(false)
+    }
     
     const updateDatas = (updatingOne) => {
         const newDatasArray = datas.filter(data => data._id != updatingOne._id)
@@ -57,17 +138,19 @@ export function Homepage(){
 
     
     return (
-        <div>
+        <div className="h-screen container-fluid">
             <h1>CRUD EN REACT</h1>
-            <Container className="row">
-                <Row>
-                    <Col>
+            <Container className="row h-100">
+                <Row className="d-flex">
+                    <Col className="my-auto mt-6" >
                         <Formulaire onSubmit={addData}/>
                     </Col>
                     <Col>
-                        <TableData allData={datas} updateDatas={(lastUpdateData) => updateDatas(lastUpdateData)} deleteDatas={(lastDelete) => deleteDatas(lastDelete)} />
-                    </Col>                
+                        <DataTable columns={columns} data={insertActions(datas)} />
+                    </Col>
                 </Row>
+                {show && <ModalCard show={show} hide={() => handleModal(0, "update")} id={selectedId} update={(value) => updateData(selectedId, value)} modal="update" />}
+                {showSupp && <ModalCard show={showSupp} hide={() => handleModal(0, "delete")} id={selectedId} modal="delete" del={() => deleteData(selectedId)} />}
             </Container>
         </div>
     )

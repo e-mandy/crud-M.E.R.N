@@ -10,10 +10,10 @@ router.get('/', getAllDatas)
 // Get a special data
 router.get('/:id', getSpecialData)
 
-// Create a new workout
+// Create a new data
 router.post('/', createData)
 
-// Delete a workout
+// Delete a data
 router.delete('/:id', deleteData)
 
 // Update a data
