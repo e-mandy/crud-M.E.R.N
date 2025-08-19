@@ -7,7 +7,7 @@ import { ModalCard } from "../modal/modal";
 const columns = [
     {
         name: "Numéro",
-        selector: row => row._id
+        selector: row => row.id
     },
 
     {
@@ -33,8 +33,14 @@ export function Homepage(){
         tableData.map(eachData => {
             eachData.actions = (
                 <div className="d-flex gap-2">
-                    <Button variant="primary" onClick={()=> {handleModal(eachData._id, 'update')}}>Modifier</Button>
-                    <Button variant="danger" onClick={() => {handleModal(eachData._id, "delete")}}>Supprimer</Button>
+                    <Row>
+                        <Col xs={12}>
+                            <Button variant="primary" onClick={()=> {handleModal(eachData._id, 'update')}}>Modifier</Button>
+                        </Col>
+                        <Col xs={12}>
+                            <Button variant="danger" onClick={() => {handleModal(eachData._id, "delete")}}>Supprimer</Button>
+                        </Col>
+                    </Row>
                 </div>
             )
         })
@@ -56,9 +62,10 @@ export function Homepage(){
         const getAllData = async () => {
             try{
 
-                const response = await fetch('http://localhost:4000/api/data')
+                const response = await fetch('http://localhost:3000/datas')
                 const json = await response.json()
-                setDatas(json.datas)
+                console.log(json)
+                setDatas(json)
             }catch(error){
                 console.log(error)
             }
@@ -70,7 +77,7 @@ export function Homepage(){
     const addData = (dataValue) => {
         const insertData = async () => {
             try{
-                const response = await fetch('http://localhost:4000/api/data', {
+                const response = await fetch('http://localhost:3000/datas', {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -92,7 +99,7 @@ export function Homepage(){
     const updateData = (id, value) => {
 
         const editData = async () => {
-            const response = await fetch(`http://localhost:4000/api/data/${id}`, {
+            const response = await fetch(`http://localhost:3000/datas/${id}`, {
                 method: "PATCH",
                 headers: {
                 "Content-Type": "application/json"
@@ -112,7 +119,7 @@ export function Homepage(){
 
     const deleteData =  (id) => {
         const suppData = async () => {
-            const response = await fetch(`http://localhost:4000/api/data/${id}`, {
+            const response = await fetch(`http://localhost:3000/datas/${id}`, {
                 method: "DELETE",
                 headers: {
                 "Content-Type": "application/json",

@@ -1,8 +1,7 @@
 const express = require('express')
 
 const router = express.Router()
-const DataModel = require('../Models/Data')
-const { getAllDatas, createData, deleteData, updateData, getSpecialData } = require('../controllers/dataController')
+const { getAllDatas, createData, deleteData, updateData, getSpecialData } = require('../controllers/datas')
 
 // Get all datas
 router.get('/', getAllDatas)

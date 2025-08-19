@@ -13,7 +13,7 @@ export function ModalCard({show, hide, id, update, modal, del}){
 
   useEffect(() => {
     const getFindData = async () => {
-      const response = await fetch(`http://localhost:4000/api/data/${id}`)
+      const response = await fetch(`http://localhost:3000/datas/${id}`)
       const json = await response.json()
       
       reset({
