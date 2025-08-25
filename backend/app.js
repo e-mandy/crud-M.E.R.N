@@ -9,7 +9,7 @@ var usersRouter = require('./routes/datas');
 var app = express();
 
 app.use(cors({
-    origin: 'http://localhost:5173'
+    origin: 'http://192.168.86.101:5173'
 }))
 app.use(logger('dev'));
 app.use(express.json());
