@@ -62,7 +62,7 @@ export function Homepage(){
         const getAllData = async () => {
             try{
 
-                const response = await fetch('http://localhost:3000/datas')
+                const response = await fetch(`http://${import.meta.env.VITE_DESKTOP_IP}:3000/datas`)
                 const json = await response.json()
                 console.log(json)
                 setDatas(json)
@@ -77,7 +77,7 @@ export function Homepage(){
     const addData = (dataValue) => {
         const insertData = async () => {
             try{
-                const response = await fetch('http://localhost:3000/datas', {
+                const response = await fetch(`http://${import.meta.env.VITE_DESKTOP_IP}:3000/datas`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -99,7 +99,7 @@ export function Homepage(){
     const updateData = (id, value) => {
 
         const editData = async () => {
-            const response = await fetch(`http://localhost:3000/datas/${id}`, {
+            const response = await fetch(`http://${import.meta.env.VITE_DESKTOP_IP}:3000/datas/${id}`, {
                 method: "PATCH",
                 headers: {
                 "Content-Type": "application/json"
@@ -119,7 +119,7 @@ export function Homepage(){
 
     const deleteData =  (id) => {
         const suppData = async () => {
-            const response = await fetch(`http://localhost:3000/datas/${id}`, {
+            const response = await fetch(`http://${import.meta.env.VITE_DESKTOP_IP}:3000/datas/${id}`, {
                 method: "DELETE",
                 headers: {
                 "Content-Type": "application/json",

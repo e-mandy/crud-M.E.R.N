@@ -13,7 +13,7 @@ export function ModalCard({show, hide, id, update, modal, del}){
 
   useEffect(() => {
     const getFindData = async () => {
-      const response = await fetch(`http://localhost:3000/datas/${id}`)
+      const response = await fetch(`http://${import.meta.env.VITE_DESKTOP_IP}:3000/datas/${id}`)
       const json = await response.json()
       
       reset({
