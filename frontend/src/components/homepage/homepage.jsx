@@ -35,10 +35,10 @@ export function Homepage(){
                 <div className="d-flex gap-2">
                     <Row>
                         <Col xs={12}>
-                            <Button variant="primary" onClick={()=> {handleModal(eachData._id, 'update')}}>Modifier</Button>
+                            <Button variant="primary" onClick={()=> {handleModal(eachData.id, 'update')}}>Modifier</Button>
                         </Col>
                         <Col xs={12}>
-                            <Button variant="danger" onClick={() => {handleModal(eachData._id, "delete")}}>Supprimer</Button>
+                            <Button variant="danger" onClick={() => {handleModal(eachData.id, "delete")}}>Supprimer</Button>
                         </Col>
                     </Row>
                 </div>
@@ -134,12 +134,12 @@ export function Homepage(){
     }
     
     const updateDatas = (updatingOne) => {
-        const newDatasArray = datas.filter(data => data._id != updatingOne._id)
+        const newDatasArray = datas.filter(data => data.id != updatingOne.id)
         setDatas([updatingOne, ...newDatasArray])
     }
 
     const deleteDatas = (deleteOne) => {
-        const newDatas = datas.filter(data => data._id != deleteOne._id)
+        const newDatas = datas.filter(data => data.id != deleteOne.id)
         setDatas(newDatas)
     }
 
