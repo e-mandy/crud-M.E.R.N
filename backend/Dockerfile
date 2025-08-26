@@ -2,7 +2,7 @@ FROM node:22
 
 WORKDIR /backend
 
-COPY package*.json .
+COPY package.json .
 
 RUN npm install && npm install -g nodemon
 
