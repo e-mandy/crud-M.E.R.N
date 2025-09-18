@@ -1,25 +1,13 @@
-FROM node:22 AS builder
-
-WORKDIR /frontend
-
-COPY package.json .
-
-RUN npm install
-
-COPY . .
-
-RUN npm run build
-
 FROM node:22
 
 WORKDIR /frontend
 
 COPY package.json .
 
-RUN npm install 
+RUN npm install && npm install -g serve
 
-COPY --from=builder /frontend/dist ./dist
+COPY . .
 
-EXPOSE 4173
+RUN npm run build
 
-CMD ["npm", "run", "preview"]
+CMD ["serve", "-s", "dist", "-l", "4173"]

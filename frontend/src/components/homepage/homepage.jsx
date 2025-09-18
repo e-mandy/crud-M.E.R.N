@@ -165,7 +165,7 @@ export function Homepage(){
                 <Col><h1 style={{}}>CRUD EN REACT</h1></Col>
             </Container>
             <Row className="flex-grow-1">
-                <Col className="align-content-center mb-5"><Formulaire onSubmit={addData}/></Col>
+                <Col className="align-content-center mb-5" data-testid="formulaire"><Formulaire onSubmit={addData}/></Col>
                 <Col><DataTable columns={columns} data={insertActions(datas)} /></Col>
             </Row>
                 {show && <ModalCard show={show} hide={() => handleModal(0, "update")} id={selectedId} update={(value) => updateData(selectedId, value)} modal="update" />}
